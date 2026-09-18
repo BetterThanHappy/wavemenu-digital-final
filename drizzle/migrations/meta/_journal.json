@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789643670439,
+      "tag": "0000_admin_allowlist_claim_role",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789661137949,
+      "tag": "0001_add_menu_background_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789726632264,
+      "tag": "0002_create_profiles_and_user_management",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789726652436,
+      "tag": "0003_avatars_storage_policies",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789726852897,
+      "tag": "0004_ensure_profile_uses_metadata_username",
+      "breakpoints": true
+    }
+  ]
+}

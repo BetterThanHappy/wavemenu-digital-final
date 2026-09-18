@@ -1,0 +1,204 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Karla", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-mint: var(--mint);
+  --color-sage: var(--sage);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /*
+   * MENÜ ARKA PLANI — VS Code'dan hızlı düzenleme:
+   * Yönetim panelinde değer girilmemişse aşağıdaki üç varsayılan kullanılır.
+   * Görseli değiştirmek için dosyayı public klasörüne koyup url('/dosya-adi.jpg') yazabilirsiniz.
+   * Görseli tamamen kapatmak için --menu-background-image: none; kullanın.
+   * Örtü değeri 0'a yaklaştıkça görsel belirgin, 1'e yaklaştıkça metin zemini daha sade olur.
+   */
+  --menu-background-color: #f4f7f9;
+  --menu-background-image: url("/wave-bg.svg");
+  --menu-background-overlay-opacity: 0.82;
+  --radius: 1rem;
+
+  /*
+   * WAVE MAVİSİ PALETİ — tek yerden tema değişimi:
+   * --primary butonların ve vurguların rengidir (#697f92).
+   * --background sayfa zemini, --foreground ana metin rengidir.
+   * Buradaki HEX değerlerini değiştirmeniz tüm uygulamayı günceller.
+   */
+  --background: #f4f7f9;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --popover: #ffffff;
+  --popover-foreground: #1e293b;
+  --primary: #697f92;
+  --primary-foreground: #ffffff;
+  --secondary: #e3eaf1;
+  --secondary-foreground: #334155;
+  --muted: #eef3f7;
+  --muted-foreground: #64748b;
+  --accent: #dbe6ee;
+  --accent-foreground: #334155;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #d7e0e8;
+  --input: #d7e0e8;
+  --ring: #697f92;
+  --mint: #dbe6ee;
+  --sage: #c6d5e0;
+  --chart-1: #697f92;
+  --chart-2: #8aa2b5;
+  --chart-3: #52697c;
+  --chart-4: #a9c0d0;
+  --chart-5: #3e5567;
+  --sidebar: #eef3f7;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #697f92;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dbe6ee;
+  --sidebar-accent-foreground: #334155;
+  --sidebar-border: #d7e0e8;
+  --sidebar-ring: #697f92;
+}
+
+.dark {
+  /* Koyu tema seçildiğinde yönetim panelinden özel renk girilmemişse bu zemin kullanılır. */
+  --menu-background-color: #16212b;
+  --background: #16212b;
+  --foreground: #e8eef4;
+  --card: #1e2b36;
+  --card-foreground: #e8eef4;
+  --popover: #1e2b36;
+  --popover-foreground: #e8eef4;
+  --primary: #9ab2c4;
+  --primary-foreground: #16212b;
+  --secondary: #27363f;
+  --secondary-foreground: #e8eef4;
+  --muted: #27363f;
+  --muted-foreground: #a7b8c6;
+  --accent: #33434f;
+  --accent-foreground: #e8eef4;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: #9ab2c4;
+  --mint: #33434f;
+  --sage: #3d4f5c;
+  --chart-1: #9ab2c4;
+  --chart-2: #7d97ab;
+  --chart-3: #b8cbd9;
+  --chart-4: #61798c;
+  --chart-5: #d2e0ea;
+  --sidebar: #1b2832;
+  --sidebar-foreground: #e8eef4;
+  --sidebar-primary: #9ab2c4;
+  --sidebar-primary-foreground: #16212b;
+  --sidebar-accent: #33434f;
+  --sidebar-accent-foreground: #e8eef4;
+  --sidebar-border: oklch(1 0 0 / 14%);
+  --sidebar-ring: #9ab2c4;
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+}
+
+/*
+ * Arka plan iki katmandır:
+ * 1) .menu-background seçilen renk ve görseli tüm sayfaya yayar.
+ * 2) ::before renkli örtü oluşturarak hareketli/yoğun fotoğraflarda yazıyı okunur tutar.
+ * İçerik z-index ile örtünün önünde kalır. Bu sınıflar ana menüde index.tsx tarafından kullanılır.
+ */
+@utility menu-background {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--menu-background-color);
+  background-image: var(--menu-background-image);
+  background-position: center top;
+  background-repeat: repeat-y;
+  background-size: cover;
+  background-attachment: fixed;
+
+  &::before {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background-color: var(--menu-background-color);
+    opacity: var(--menu-background-overlay-opacity);
+    pointer-events: none;
+  }
+}
+
+@utility menu-background-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobil tarayıcılarda sabit arka plan kaydırma takılmalarına yol açabildiği için normal akış kullanılır. */
+@media (max-width: 767px) {
+  .menu-background {
+    background-attachment: scroll;
+  }
+}
