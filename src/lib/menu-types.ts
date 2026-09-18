@@ -43,7 +43,7 @@ export type MenuData = {
 };
 
 // Filtre çubuklarında ve ürün düzenleme ekranında kullanılan sabit rozet listesi.
-export const ALL_TAGS = ["Vegan", "Gluten", "Kuruyemiş", "Susam - Soya", "Mantar"] as const;
+export const ALL_TAGS = ["Vegan", "Gluten", "Kuruyemiş", "Susam - Soya", "Mantar", "Süt","Yumurta","Balık","Yer Fıstığı","Hardal","Kereviz","Sülfitler","Acı Bakla",] as const;
 
 export const DEFAULT_ALLERGEN_NOTE =
   "Alerji ve hassasiyetleriniz için lütfen sipariş öncesi bilgi veriniz. Çapraz bulaşma riski bulunmaktadır.";
