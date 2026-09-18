@@ -59,7 +59,7 @@
    * Görseli tamamen kapatmak için --menu-background-image: none; kullanın.
    * Örtü değeri 0'a yaklaştıkça görsel belirgin, 1'e yaklaştıkça metin zemini daha sade olur.
    */
-  --menu-background-color: #f4f7f9;
+  --menu-background-color: #3e87b8;
   --menu-background-image: url("/wave-bg.svg");
   --menu-background-overlay-opacity: 0.82;
   --radius: 1rem;
