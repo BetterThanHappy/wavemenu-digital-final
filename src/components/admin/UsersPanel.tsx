@@ -51,7 +51,7 @@ export function UsersPanel() {
     await refresh();
   }
 
-  async function toggleAdmin(row: Row) {
+   async function toggleAdmin(row: Row) {
     if (row.isAdmin) {
       const { error } = await supabase
         .from("user_roles")
@@ -73,6 +73,29 @@ export function UsersPanel() {
       }
       toast.success("Yönetici yetkisi verildi.");
     }
+    await refresh();
+  }
+
+  // --- KULLANICI SİLME FONKSİYONU TAM BURADA (toggleAdmin'in bittiği yerde) ---
+  async function deleteUser(row: Row) {
+    if ((row.email ?? "").toLowerCase() === MAIN_ADMIN_EMAIL) {
+      toast.error("Ana yönetici hesabı silinemez.");
+      return;
+    }
+
+    if (!confirm(`${row.username || row.email} kullanıcısını silmek istediğinize emin misiniz?`)) {
+      return;
+    }
+
+    await supabase.from("user_roles").delete().eq("user_id", row.id);
+    const { error } = await supabase.from("profiles").delete().eq("id", row.id);
+
+    if (error) {
+      toast.error("Kullanıcı silinemedi: " + error.message);
+      return;
+    }
+
+    toast.success("Kullanıcı başarıyla silindi.");
     await refresh();
   }
 
@@ -113,6 +136,14 @@ export function UsersPanel() {
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => toggleAdmin(row)}>
                     {row.isAdmin ? "Yöneticiliği al" : "Yönetici yap"}
+                  </Button>
+                  {/* SİL BUTONU BURADA */}
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => deleteUser(row)}
+                  >
+                    Sil
                   </Button>
                 </div>
               )}
