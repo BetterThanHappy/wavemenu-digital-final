@@ -147,19 +147,51 @@ function MenuPage() {
           ))
         )}
 
-        <footer className="mt-16 space-y-4 border-t border-border/70 pt-6 text-center">
+                <footer className="mt-16 space-y-4 border-t border-border/70 pt-6 text-center">
           <p className="text-xs leading-relaxed text-muted-foreground">
             {data.settings?.allergen_note || DEFAULT_ALLERGEN_NOTE}
           </p>
+
           {(data.settings?.phone || data.settings?.instagram) && (
-            <p className="text-xs text-muted-foreground">
-              {[data.settings?.phone, data.settings?.instagram].filter(Boolean).join(" · ")}
-            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+              {data.settings?.phone && (
+                <a
+                  href={`tel:${data.settings.phone}`}
+                  className="hover:text-primary hover:underline"
+                >
+                  {data.settings.phone}
+                </a>
+              )}
+
+              {data.settings?.phone && data.settings?.instagram && (
+                <span>·</span>
+              )}
+
+              {data.settings?.instagram && (() => {
+                const cleanUsername = data.settings.instagram.replace("@", "").trim();
+                const instagramUrl = cleanUsername.startsWith("http")
+                  ? cleanUsername
+                  : `https://instagram.com/${cleanUsername}`;
+
+                return (
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    @{cleanUsername}
+                  </a>
+                );
+              })()}
+            </div>
           )}
+
           <Link to="/admin" className="inline-block text-xs text-primary hover:underline">
             Yönetim paneli
           </Link>
         </footer>
+
       </main>
       </div>
     </div>
