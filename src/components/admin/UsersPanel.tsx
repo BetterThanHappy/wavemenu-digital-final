@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MAIN_ADMIN_EMAIL, type Profile } from "@/lib/profile";
+import { MAIN_ADMIN_EMAIL, avatarSignedUrl, type Profile } from "@/lib/profile";
 
 type Row = Profile & { isAdmin: boolean };
 
@@ -30,6 +30,27 @@ function useUsers() {
   });
 }
 
+// Kullanıcının profil fotoğrafını yükleyip gösteren, yoksa baş harfini basan bileşen
+function UserAvatar({ path, username }: { path: string | null; username: string }) {
+  const { data: url } = useQuery({
+    queryKey: ["avatar-url", path],
+    queryFn: () => avatarSignedUrl(path),
+    enabled: Boolean(path),
+  });
+
+  return (
+    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border bg-muted">
+      {url ? (
+        <img src={url} alt={username} className="h-full w-full object-cover" />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center text-sm font-semibold uppercase text-muted-foreground">
+          {(username || "?").slice(0, 1)}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function UsersPanel() {
   const queryClient = useQueryClient();
   const { data: users, isLoading, error } = useUsers();
@@ -51,7 +72,7 @@ export function UsersPanel() {
     await refresh();
   }
 
-   async function toggleAdmin(row: Row) {
+  async function toggleAdmin(row: Row) {
     if (row.isAdmin) {
       const { error } = await supabase
         .from("user_roles")
@@ -76,7 +97,6 @@ export function UsersPanel() {
     await refresh();
   }
 
-  // --- KULLANICI SİLME FONKSİYONU TAM BURADA (toggleAdmin'in bittiği yerde) ---
   async function deleteUser(row: Row) {
     if ((row.email ?? "").toLowerCase() === MAIN_ADMIN_EMAIL) {
       toast.error("Ana yönetici hesabı silinemez.");
@@ -110,23 +130,28 @@ export function UsersPanel() {
         {users?.length === 0 && <p className="text-sm text-muted-foreground">Henüz kullanıcı yok.</p>}
 
         {users?.map((row) => {
-          // Ana yöneticinin onayı ve rolü arayüzden değiştirilemez.
           const isMain = (row.email ?? "").toLowerCase() === MAIN_ADMIN_EMAIL;
           return (
             <div
               key={row.id}
               className="flex flex-wrap items-center gap-3 rounded-lg border border-border p-3"
             >
-              <div className="min-w-48 flex-1">
-                <p className="text-sm font-medium">{row.username}</p>
-                <p className="text-xs text-muted-foreground">{row.email}</p>
+              {/* PROFİL FOTOĞRAFI + KULLANICI BİLGİSİ */}
+              <div className="flex min-w-48 flex-1 items-center gap-3">
+                <UserAvatar path={row.avatar_url} username={row.username} />
+                <div>
+                  <p className="text-sm font-medium">{row.username}</p>
+                  <p className="text-xs text-muted-foreground">{row.email}</p>
+                </div>
               </div>
+
               <Badge variant={row.is_approved ? "default" : "secondary"}>
                 {row.is_approved ? "Onaylı" : "Onay bekliyor"}
               </Badge>
               <Badge variant={row.isAdmin ? "default" : "outline"}>
                 {row.isAdmin ? "Yönetici" : "Kullanıcı"}
               </Badge>
+
               {isMain ? (
                 <span className="text-xs text-muted-foreground">Ana yönetici</span>
               ) : (
@@ -137,12 +162,7 @@ export function UsersPanel() {
                   <Button variant="ghost" size="sm" onClick={() => toggleAdmin(row)}>
                     {row.isAdmin ? "Yöneticiliği al" : "Yönetici yap"}
                   </Button>
-                  {/* SİL BUTONU BURADA */}
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => deleteUser(row)}
-                  >
+                  <Button variant="destructive" size="sm" onClick={() => deleteUser(row)}>
                     Sil
                   </Button>
                 </div>
