@@ -202,3 +202,12 @@
     background-attachment: scroll;
   }
 }
+/* Google Translate varsayılan çubuğunu gizle */
+.goog-te-banner-frame.skiptranslate,
+body > .skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+

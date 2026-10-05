@@ -6,6 +6,8 @@ import { DEFAULT_ALLERGEN_NOTE } from "@/lib/menu-types";
 import { FilterBar } from "@/components/menu/FilterBar";
 import { MenuItemCard } from "@/components/menu/MenuItemCard";
 import { cn } from "@/lib/utils";
+import { LanguageSelector } from "@/components/menu/LanguageSelector";
+
 
 export const Route = createFileRoute("/")({
   // İlk açılışta menü verisini hazırlar; sayfa çizilirken ayrıca yükleniyor ekranı gerekmez.
@@ -98,6 +100,10 @@ function MenuPage() {
       <div className="menu-background-content">
       <header className="border-b border-border/70 bg-gradient-to-b from-mint/60 to-background">
         <div className="mx-auto flex max-w-3xl flex-col items-center px-5 py-12 text-center">
+          {/* DİL SEÇİCİ BURAYA: */}
+          <div className="mb-6">
+            <LanguageSelector />
+          </div>
           <h1 className="text-5xl font-semibold tracking-[0.2em] text-foreground uppercase">
             {restaurantName}
           </h1>
