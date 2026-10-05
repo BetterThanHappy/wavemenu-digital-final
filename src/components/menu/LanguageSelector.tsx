@@ -12,17 +12,17 @@ export function LanguageSelector() {
   const [currentLang, setCurrentLang] = useState<"tr" | "en" | "ru">("tr");
 
   useEffect(() => {
-    // Sayfa yenilendiğinde hafızadaki dili hatırla
+    // Çerezden kayıtlı dili oku
     const match = document.cookie.match(/googtrans=\/tr\/(en|ru)/);
     if (match && (match[1] === "en" || match[1] === "ru")) {
       setCurrentLang(match[1] as "en" | "ru");
     }
 
-    // Google Translate script'ini sayfaya bağla
+    // Google Translate script'ini ekle
     if (!document.getElementById("google-translate-script")) {
       const script = document.createElement("script");
       script.id = "google-translate-script";
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
       document.body.appendChild(script);
 
@@ -42,7 +42,6 @@ export function LanguageSelector() {
   const changeLanguage = (lang: "tr" | "en" | "ru") => {
     setCurrentLang(lang);
 
-    // Çerezleri güncelle
     if (lang === "tr") {
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
@@ -51,7 +50,6 @@ export function LanguageSelector() {
       document.cookie = `googtrans=/tr/${lang}; domain=${window.location.hostname}; path=/;`;
     }
 
-    // Gizli Google seçicisini tetikle veya sayfayı yenile
     const select = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
     if (select) {
       select.value = lang;
@@ -62,11 +60,11 @@ export function LanguageSelector() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-1.5">
-      {/* Gizli Google Translate öğesi */}
+    <div className="flex flex-col items-center gap-1.5 my-2">
+      {/* Gizli Google elementi */}
       <div id="google_translate_element" className="hidden" />
 
-      {/* Dil Seçim Butonları */}
+      {/* Butonlar */}
       <div className="inline-flex items-center rounded-full border border-border/80 bg-background/90 p-1 shadow-sm backdrop-blur-md">
         <button
           type="button"
@@ -106,7 +104,6 @@ export function LanguageSelector() {
         </button>
       </div>
 
-      {/* TR dışındaki diller seçildiğinde çıkan not */}
       {currentLang !== "tr" && (
         <p className="text-[11px] font-light tracking-wide text-muted-foreground">
           {currentLang === "en" && "✦ Automatically translated via Google Translate"}
